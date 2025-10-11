@@ -32,3 +32,11 @@ from widgets import CTkTree
         self.sav_note.grid(row=2, column=1, sticky="ew", padx=20, pady=15)
         ctk.CTkButton(input_card, text="บันทึกรายการ", command=self._add_sav, font=ctk.CTkFont(family="Inter", size=14, weight="bold"),
                       fg_color="#3B82F6", hover_color="#2563EB").grid(row=3, column=1, sticky="e", padx=20, pady=15)
+        
+            self.sav_total = ctk.CTkLabel(input_card, text="ยอดออมสะสม: 0.00", font=ctk.CTkFont(family="Inter", size=18, weight="bold"))
+            self.sav_total.grid(row=3, column=0, sticky="w", padx=20, pady=15)
+        
+            table_card = ctk.CTkFrame(self, corner_radius=15)
+            table_card.grid(row=2, column=0, sticky="nsew", padx=10, pady=(0, 10))
+            table_card.grid_columnconfigure(0, weight=1)
+            table_card.grid_rowconfigure(1, weight=1)
