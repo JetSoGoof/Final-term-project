@@ -40,3 +40,14 @@ from widgets import CTkTree
             table_card.grid(row=2, column=0, sticky="nsew", padx=10, pady=(0, 10))
             table_card.grid_columnconfigure(0, weight=1)
             table_card.grid_rowconfigure(1, weight=1)
+        
+            ctk.CTkLabel(table_card, text="ประวัติการออม", font=ctk.CTkFont(family="Inter", size=18, weight="bold")).grid(row=0, column=0, sticky="w", padx=20, pady=20)
+            cols = ("date", "amount", "note", "id")
+            self.sav_table = CTkTree(table_card, columns=cols, show="headings", height=16)
+            for c, w in zip(cols, (160, 160, 580, 0)):
+                self.sav_table.heading(c, text=c.upper()); self.sav_table.column(c, width=w, anchor="w")
+        self.sav_table.grid(row=1, column=0, sticky="nsew", padx=20, pady=(0, 10))
+        sb = ctk.CTkScrollbar(table_card, command=self.sav_table.yview)
+        sb.grid(row=1, column=1, sticky="ns", pady=(0, 10))
+        self.sav_table.configure(yscroll=sb.set)
+        ctk.CTkButton(table_card, text="ลบรายการที่เลือก", command=self._del_selected_sav, fg_color="#EF4444", hover_color="#DC2626", font=ctk.CTkFont(family="Inter", size=14, weight="bold")).grid(row=2, column=0, sticky="w", padx=20, pady=(0, 20))
