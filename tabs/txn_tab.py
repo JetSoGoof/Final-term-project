@@ -161,4 +161,4 @@ class TxnTab(ctk.CTkFrame):
             row = self.txn_table.item(it)["values"]
             tid = row[-1]
             T_TXNS.remove(Q.txn_id == tid)
-        self._load_txns()x
+        self._load_txns()
