@@ -133,3 +133,32 @@ class TxnTab(ctk.CTkFrame):
         self.txn_amount.delete(0, END); self.txn_note.delete(0, END); self.txn_category.delete(0, END)
         self._load_txns()
     
+    def _load_txns(self):
+        ym = date.today().strftime("%Y-%m")
+        docs = [t for t in T_TXNS.all() if str(t.get("date","")).startswith(ym)]
+        docs.sort(key=lambda x: (x.get("date",""), x.get("created_at","")), reverse=True)
+        for i in self.txn_table.get_children(): self.txn_table.delete(i)
+        
+        inc, exp = 0.0, 0.0
+        for t in docs:
+            amt = float(t.get("amount", 0))
+            if t.get("direction") == "INCOME": inc += abs(amt)
+            else: exp += abs(amt) if amt < 0 else amt
+            self.txn_table.insert("","end",values=(t.get("date",""),t.get("direction",""),t.get("category",""),money(amt),t.get("note",""),t.get("txn_id","")))
+        
+        net = inc - exp
+        
+        self.sum_inc.animate_to(inc); self.sum_exp.animate_to(exp); self.sum_net_label.animate_to(net)
+        
+        progress = exp / inc if inc > 0 else (1 if exp > 0 else 0)
+        self.donut_chart.set_progress(progress)
+
+    def _del_selected_txn(self):
+        sel = self.txn_table.selection()
+        if not sel: return
+        if not messagebox.askyesno("ยืนยัน", "ลบรายการที่เลือก?"): return
+        for it in sel:
+            row = self.txn_table.item(it)["values"]
+            tid = row[-1]
+            T_TXNS.remove(Q.txn_id == tid)
+        self._load_txns()
