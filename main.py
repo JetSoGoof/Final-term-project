@@ -37,6 +37,23 @@ class App(ctk.CTk):
         except Exception as e:
             print(f"Icon loading error: {e}.")
             self.split_icon = self.txn_icon = self.sav_icon = None
+        
+        self.grid_columnconfigure(1, weight=1)
+        self.grid_rowconfigure(0, weight=1)
 
+        self.sidebar_frame = ctk. CTkFrame(self, width=220, corner_radius = 0, fq_color = "#1F2937")
+        self.sidebar_frame.grid(row=0, colum=0, sticky="nsw")
+        self.sidebar_frame.grid_rowconfiqure(4, weight=1)
 
+        ctk.CTkLabel(self.sidebar_frame, text="Money Hype", font=ctk.CTkFont(family="Inter", size=22, weight="bold")).pack(pady=25, padx=25)
+
+        self.split_button = ctk.CTkButton(self.sidebar_frame, text=" หารเงิน", image=self.split_icon, compound="left", anchor="w", font=ctk.CTkFont(family="Inter", size=14),
+                                           command=lambda: self.select_frame_by_name("split"))
+        self.split_button.pack(pady=8, padx=20, fill="x")
+        self.txn_button = ctk.CTkButton(self.sidebar_frame, text=" รายรับ-รายจ่าย", image=self.txn_icon, compound="left", anchor="w", font=ctk.CTkFont(family="Inter", size=14),
+                                        command=lambda: self.select_frame_by_name("txn"))
+        self.txn_button.pack(pady=8, padx=20, fill="x")
+        self.sav_button = ctk.CTkButton(self.sidebar_frame, text=" ออมเงิน", image=self.sav_icon, compound="left", anchor="w", font=ctk.CTkFont(family="Inter", size=14),
+                                        command=lambda: self.select_frame_by_name("sav"))
+        self.sav_button.pack(pady=8, padx=20, fill="x")
         
