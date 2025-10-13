@@ -56,4 +56,16 @@ class App(ctk.CTk):
         self.sav_button = ctk.CTkButton(self.sidebar_frame, text=" ออมเงิน", image=self.sav_icon, compound="left", anchor="w", font=ctk.CTkFont(family="Inter", size=14),
                                         command=lambda: self.select_frame_by_name("sav"))
         self.sav_button.pack(pady=8, padx=20, fill="x")
+        self.appearance_mode_menu = ctk.CTkOptionMenu(self.sidebar_frame, values=["Dark", "Light", "System"],
+                                                                       command=ctk.set_appearance_mode)
+        self.appearance_mode_menu.pack(side="bottom", pady=20, padx=20)
+
+        self.split_frame = SplitTab(self, fg_color="transparent")
+        self.txn_frame = TxnTab(self, fg_color="transparent")
+        self.sav_frame = SavTab(self, fg_color="transparent")
         
+        self.split_frame.grid(row=0, column=1, padx=20, pady=20, sticky="nsew")
+        self.txn_frame.grid(row=0, column=1, padx=20, pady=20, sticky="nsew")
+        self.sav_frame.grid(row=0, column=1, padx=20, pady=20, sticky="nsew")
+
+        self.select_frame_by_name("split")
