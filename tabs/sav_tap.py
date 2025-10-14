@@ -63,3 +63,21 @@ class SavTab(ctk.CTkFrame):
         T_SAV.insert(doc)
         self.sav_amount.delete(0, END); self.sav_note.delete(0, END)
         self._load_sav()
+
+        def _load_sav(self):
+        for i in self.sav_table.get_children(): self.sav_table.delete(i)
+        docs = T_SAV.all(); docs.sort(key=lambda x: (x.get("date",""), x.get("created_at","")), reverse=True)
+        total = 0.0
+        for s in docs:
+            amt = float(s.get("amount", 0)); total += amt
+            self.sav_table.insert("", "end", values=(s.get("date",""), money(amt), s.get("note",""), s.get("saving_id","")))
+        self.sav_total.configure(text=f"ยอดออมสะสม: {money(total)}")
+
+    def _del_selected_sav(self):
+        sel = self.sav_table.selection()
+        if not sel: return
+        if not messagebox.askyesno("ยืนยัน", "ลบรายการที่เลือก?"): return
+        for it in sel:
+            row = self.sav_table.item(it)["values"]; sid = row[-1]
+            T_SAV.remove(Q.saving_id == sid)
+        self._load_sav()
