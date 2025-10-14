@@ -70,11 +70,23 @@ class App(ctk.CTk):
 
         self.select_frame_by_name("split")
         
-def select_frame_by_name(self, name):
+ def select_frame_by_name(self, name):
         selected_color = ("#3A536B", "#2E4154")
         
         self.split_button.configure(fg_color=selected_color if name == "split" else "transparent")
         self.txn_button.configure(fg_color=selected_color if name == "txn" else "transparent")
         self.sav_button.configure(fg_color=selected_color if name == "sav" else "transparent")
 
-     
+        if name == "split":
+            self.split_frame.tkraise()
+            self.split_frame._load_split() # สั่งโหลดข้อมูลเมื่อเลือก
+        elif name == "txn":
+            self.txn_frame.tkraise()
+            self.txn_frame.on_tab_selected() # สั่งโหลดข้อมูลเมื่อเลือก
+        elif name == "sav":
+            self.sav_frame.tkraise()
+            self.sav_frame._load_sav() # สั่งโหลดข้อมูลเมื่อเลือก
+
+if __name__ == "__main__":
+    app = App()
+    app.mainloop()
