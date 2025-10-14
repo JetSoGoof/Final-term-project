@@ -64,7 +64,7 @@ class SavTab(ctk.CTkFrame):
         self.sav_amount.delete(0, END); self.sav_note.delete(0, END)
         self._load_sav()
 
-        def _load_sav(self):
+    def _load_sav(self):
         for i in self.sav_table.get_children(): self.sav_table.delete(i)
         docs = T_SAV.all(); docs.sort(key=lambda x: (x.get("date",""), x.get("created_at","")), reverse=True)
         total = 0.0
