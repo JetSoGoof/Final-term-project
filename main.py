@@ -69,3 +69,12 @@ class App(ctk.CTk):
         self.sav_frame.grid(row=0, column=1, padx=20, pady=20, sticky="nsew")
 
         self.select_frame_by_name("split")
+        
+def select_frame_by_name(self, name):
+        selected_color = ("#3A536B", "#2E4154")
+        
+        self.split_button.configure(fg_color=selected_color if name == "split" else "transparent")
+        self.txn_button.configure(fg_color=selected_color if name == "txn" else "transparent")
+        self.sav_button.configure(fg_color=selected_color if name == "sav" else "transparent")
+
+     
